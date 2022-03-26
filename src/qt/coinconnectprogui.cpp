@@ -69,7 +69,7 @@ CoinconnectGUI::CoinconnectGUI(QWidget *parent):
     rpcConsole(0)
 {
     resize(850, 550);
-    setWindowTitle(tr("CoinConnect"));
+    setWindowTitle(tr("Coinconnect"));
 #ifndef Q_OS_MAC
     qApp->setWindowIcon(QIcon(":icons/coinconnectpro"));
     setWindowIcon(QIcon(":icons/coinconnectpro"));
@@ -198,13 +198,13 @@ void CoinconnectGUI::createActions()
     overviewAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
     tabGroup->addAction(overviewAction);
 
-    sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send coins"), this);
-    sendCoinsAction->setToolTip(tr("Send coins to a Coinconnect address"));
+    sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send Coins"), this);
+    sendCoinsAction->setToolTip(tr("Send Coins to a Coinconnect address"));
     sendCoinsAction->setCheckable(true);
     sendCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(sendCoinsAction);
 
-    receiveCoinsAction = new QAction(QIcon(":/icons/receiving_addresses"), tr("&Receive coins"), this);
+    receiveCoinsAction = new QAction(QIcon(":/icons/receiving_addresses"), tr("&Receive Coins"), this);
     receiveCoinsAction->setToolTip(tr("Show the list of addresses for receiving payments"));
     receiveCoinsAction->setCheckable(true);
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));

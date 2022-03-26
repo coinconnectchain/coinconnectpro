@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
-    <height>342</height>
+    <width>622</width>
+    <height>471</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -319,8 +319,8 @@
      <item>
       <widget class="QLabel" name="label_Coinconnect_Intro">
        <property name="text">
-        <string>Coinconnect is the best crypto coin.
-Visit https://coinconnectpro.info for more details.</string>
+        <string>Coinconnect is the greatest crypto coin.
+Visit https://coinconnect.world for more details.</string>
        </property>
       </widget>
      </item>
