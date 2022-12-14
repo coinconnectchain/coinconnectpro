@@ -1035,6 +1035,10 @@ boost::filesystem::path GetDefaultDataDir()
 #endif
 }
 
+static boost::filesystem::path pathCached;
+static boost::filesystem::path pathCachedNetSpecific;
+static CCriticalSection csPathCached;
+
 const boost::filesystem::path &GetDataDir(bool fNetSpecific)
 {
     namespace fs = boost::filesystem;
@@ -1070,6 +1074,15 @@ const boost::filesystem::path &GetDataDir(bool fNetSpecific)
     return path;
 }
 
+
+void ClearDatadirCache()
+{
+    LOCK(csPathCached);
+
+    pathCached = boost::filesystem::path();
+    pathCachedNetSpecific = boost::filesystem::path();
+}
+
 boost::filesystem::path GetConfigFile()
 {
     boost::filesystem::path pathConfigFile(GetArg("-conf", "Coinconnect.conf"));
@@ -1082,8 +1095,41 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile());
     if (!streamConfig.good())
-        return; // No coinconnectpro.conf file is OK
+    {
+     //   return; // No coinconnectpro.conf file is OK
+        FILE* configFile = fopen(GetConfigFile().string().c_str(), "a");
 
+
+        if (configFile != NULL)
+       {
+            std::string strHeader = "# CoinConnect config file\n"
+                          "rpcuser=username\n"
+                          "rpcpassword=password\n"
+                          "server=1\n"
+                          "listen=1\n"
+                          "txindex=1\n"
+                          "daemon=1\n"
+                          "port=19990\n"
+                          "rpcport=19991\n"
+                          "rpcbind=127.0.0.1\n"
+                          "maxconnections=20\n"
+                          "rpcallowip=127.0.0.1\n"
+                          "\n"
+                          "# ADDNODES:\n"
+                          "addnode=45.77.75.50:19990\n"
+                          "addnode=8.3.29.162:19990\n"
+                          "addnode=185.54.246.99:19990\n"
+                          "addnode=144.126.151.159:19990\n"
+			  "\n";
+            fwrite(strHeader.c_str(), std::strlen(strHeader.c_str()), 1, configFile);
+            fclose(configFile);
+        }
+        return; // Nothing to read, so just return
+    }
+
+
+
+  {
     set<string> setOptions;
     setOptions.insert("*");
 
@@ -1099,6 +1145,9 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
         }
         mapMultiSettingsRet[strKey].push_back(it->value[0]);
     }
+  }
+    // If datadir is changed in .conf file:
+    ClearDatadirCache();
 }
 
 boost::filesystem::path GetPidFile()
