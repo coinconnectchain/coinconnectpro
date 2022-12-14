@@ -56,7 +56,7 @@ const std::string CLIENT_NAME("Coinconnect");
 
 #ifndef BUILD_DATE
 #    ifdef GIT_COMMIT_DATE
-#        define BUILD_DATE "July 4, 2013"
+#        define BUILD_DATE "December 13th, 2022"
 #    else
 #        define BUILD_DATE __DATE__ ", " __TIME__
 #    endif

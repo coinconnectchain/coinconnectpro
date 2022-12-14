@@ -25,7 +25,7 @@
 using namespace std;
 using namespace boost;
 
-static const int MAX_OUTBOUND_CONNECTIONS = 8;
+static const int MAX_OUTBOUND_CONNECTIONS = 20;
 
 void ThreadMessageHandler2(void* parg);
 void ThreadSocketHandler2(void* parg);
@@ -1149,8 +1149,11 @@ void MapPort()
 // The first name is used as information source for addrman.
 // The second name should resolve to a list of seed addresses.
 static const char *strDNSSeed[][2] = {
-    {"8.3.29.162", "8.3.29.162"},
-    {NULL, NULL}
+    {"officialNode01", "45.77.75.50:19990"},
+    {"officialNode02", "8.3.29.162:19990"},
+    {"communityNode01", "185.54.246.99:19990"},
+    {"communityNode01", "144.126.151.159:19990"}
+//    {NULL, NULL}
 };
 
 void ThreadDNSAddressSeed(void* parg)
@@ -1221,7 +1224,7 @@ void ThreadDNSAddressSeed2(void* parg)
 
 unsigned int pnSeed[] =
 {
-    0x08031da2
+    0x2d4d4B32, 0x08031da2, 0xb936f663, 0x907e979f
 };
 
 void DumpAddresses()
@@ -1368,7 +1371,7 @@ void ThreadOpenConnections2(void* parg)
             return;
 
         // Add seed nodes if IRC isn't working
-        if (addrman.size()==0 && (GetTime() - nStart > 60) && !fTestNet)
+        if (addrman.size()==0 && (GetTime() - nStart > 3) && !fTestNet)
         {
             std::vector<CAddress> vAdd;
             for (unsigned int i = 0; i < ARRAYLEN(pnSeed); i++)
