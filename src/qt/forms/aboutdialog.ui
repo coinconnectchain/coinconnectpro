@@ -91,7 +91,7 @@
         <cursorShape>IBeamCursor</cursorShape>
        </property>
        <property name="text">
-        <string>Copyright © 2013 The Coinconnect Foundation
+        <string>Copyright © 2022 Coinconnect Developers - TylerAnder T.A
          http://www.coinconnectpro.com</string>
        </property>
        <property name="textInteractionFlags">
